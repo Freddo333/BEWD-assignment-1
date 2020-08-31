@@ -1,3 +1,4 @@
+<?php include "templates/header.php"; ?>
 <?php 
 // Include config file
 require_once "config.php";
@@ -76,7 +77,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if($stmt->execute()){
                 // Redirect to login page
-                header("location: login.php");
+                header("location: index.php");
             } else{
                 echo "Something went wrong. Please try again later.";
             }
@@ -96,11 +97,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style type="text/css">
-        body{ font: 14px sans-serif; }
-        .wrapper{ width: 350px; padding: 20px; }
-    </style>
 </head>
 <body>
     <div class="wrapper">
@@ -131,3 +127,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </div>    
 </body>
 </html>
+
+<?php include "templates/footer.php"; ?>

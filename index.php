@@ -1,3 +1,5 @@
+<?php include "templates/loged-out-header.php"; ?>
+
 <?php 
 
 // Initialize the session
@@ -92,14 +94,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style type="text/css">
-        body{ font: 14px sans-serif; }
-        .wrapper{ width: 350px; padding: 20px; }
-    </style>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="container-fluid text-left text-md-left">
         <h2>Login</h2>
         <p>Please fill in your credentials to login.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
@@ -121,3 +118,5 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </div>
 </body>
 </html>
+
+<?php include "templates/footer.php"; ?>
