@@ -2,9 +2,10 @@ CREATE DATABASE assignment1;
 
 use assignment1;
 
-CREATE TABLE costs (
+CREATE TABLE products (
 	id INT(10) UNSIGNED AUTO_INCREMENT PRIMARY KEY, 
     username VARCHAR(50),
+	productname VARCHAR(50),
 	cost FLOAT NOT NULL,
 	paid FLOAT,
 	date TIMESTAMP
