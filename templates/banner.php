@@ -5,5 +5,5 @@
 </head>
 
 <body>
-	<nav class="navbar sticky-top navbar-expand navbar-light bg-light">
+	<nav class="navbar sticky-top navbar-expand navbar-dark bg-primary">
 		<a class="navbar-brand" href="#">Costs</a>

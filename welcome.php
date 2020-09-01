@@ -1,14 +1,14 @@
 <?php include "templates/header.php"; ?>
  
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="bg-secondary">
 <head>
     <meta charset="UTF-8">
-    <title>Welcome</title>
+    <title>Home</title>
 </head>
 <body>
-    <div class="container-fluid text-left text-md-left">
-        <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to our site.</h1>
+    <div class="container-fluid text-left text-md-left bg-light">
+        <h1>Hi, <?php echo htmlspecialchars($_SESSION["username"]); ?>.</h1>
     
 	<?php 
 // include the config file that we created before
@@ -21,7 +21,7 @@
         $statement = $connection->prepare($sql);
         $statement->execute();
         $result = $statement->fetchAll();
-		$maxId = 0;
+		$amountOwed = 0;
 
 	} catch(PDOException $error) {
         // if there is an error, tell us what it is
@@ -31,21 +31,23 @@
         //if there are some results
         if ($result && $statement->rowCount() > 0) { 
 		?>
-            <h2>Results</h2>
+            <h2>Your purchases are: </h2>
 
             <?php // This is a loop, which will loop through each result in the array
               foreach($result as $row) { ?>
 			<p>
 				Product name:
 				<?php echo $row['productname']; ?><br>				
-				Product cost:
+				Product cost: $
 				<?php echo $row['cost']; ?><br> 		
-				Amount paid:
+				Amount paid: $
 				<?php echo $row['paid']; ?><br> 		
 				Date purchased:
-				<?php echo $row['date']; ?><br> 
+				<?php echo substr($row['date'], 0, 10); ?><br> 
 				<a href='update-item.php?id=<?php echo $row['id']; ?>'>Edit</a>
-				<?php $maxId = $row['id'];?>
+				<a href='delete.php?id=<?php echo $row['id'];?>'>Delete</a>
+				<?php 	$amountOwed += $row['cost'];
+						$amountOwed -= $row['paid']; ?>
 			</p>
 			<hr>
 <?php		};
@@ -89,17 +91,25 @@
 		}
 	}
 ?>
+<h3>
+New purchase
+</h3>
 <form method="post">
 	<label for="productname">Product Name</label> 
-	<input type="text" name="productname" id="productname"> 
-	<label for="cost">Product cost</label> 
-	<input type="text" name="cost" id="cost"> 
-	<label for="paid">Amount paid</label> 
-	<input type="text" name="paid" id="paid"> 
+	<input type="text"  maxlength="32" name="productname" id="productname"> 
+	<label for="cost">Product cost $</label> 
+	<input type="number" step=".01" name="cost" id="cost"> 
+	<label for="paid">Amount paid $</label> 
+	<input type="number" step=".01" name="paid" id="paid"> 
 	<input type="submit" name="submit" value="Submit">
 </form>
+
+<hr>
+<h2>
+	You currently owe a total of $<?php echo $amountOwed ?>
+</h2>
+
 </div>
 </body>
-</html>
-
 <?php include "templates/footer.php"; ?>
+</html>
