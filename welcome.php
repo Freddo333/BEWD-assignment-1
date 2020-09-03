@@ -7,7 +7,7 @@
     <title>Home</title>
 </head>
 <body>
-    <div class="container-fluid text-left text-md-left bg-light">
+    <div class="container-fluid bg-light">
         <h1>Hi, <?php echo htmlspecialchars($_SESSION["username"]); ?>.</h1>
     
 	<?php 
@@ -59,6 +59,14 @@
 		try {
 			$connection = new PDO($dsn, $username, $password, $options);
 			
+			if ($_POST['cost'] ==""){
+				$_POST['cost'] = '0';
+			}
+			if ($_POST['paid'] ==""){
+				$_POST['paid'] = '0';
+			}
+			
+			
 			$new_products = array( 
 				"username"    => $_SESSION["username"], 
 				"productname"    => $_POST['productname'], 
@@ -84,7 +92,8 @@
 			$statement = $connection->prepare($sql);
 			$statement->execute($new_products);
 			unset($_POST);
-			header('Location:'.$_SERVER['PHP_SELF']);
+			//header('Location:'.$_SERVER['PHP_SELF']);
+			echo '<script> location.replace("welcome.php"); </script>';
 					
 		} catch (PDOException $error) {
 			echo $sql . "<br>" . $error->getMessage();
@@ -96,11 +105,11 @@ New purchase
 </h3>
 <form method="post">
 	<label for="productname">Product Name</label> 
-	<input type="text"  maxlength="32" name="productname" id="productname"> 
+	<input type="text" pattern="[A-Za-z0-9\ \-]{1,}" maxlength="32" name="productname" title="Alpha-numeric" id="productname"> 
 	<label for="cost">Product cost $</label> 
-	<input type="number" step=".01" name="cost" id="cost"> 
+	<input type="number" pattern=".{1,}" step=".01" name="cost" id="cost"> 
 	<label for="paid">Amount paid $</label> 
-	<input type="number" step=".01" name="paid" id="paid"> 
+	<input type="number" pattern=".{1,}" step=".01" name="paid" id="paid"> 
 	<input type="submit" name="submit" value="Submit">
 </form>
 

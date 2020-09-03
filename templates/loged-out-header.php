@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-
-		<?php include "banner.php"; ?>
+<?php 
+	session_start();
+	include "banner.php"; ?>
 	</nav>
 </body>

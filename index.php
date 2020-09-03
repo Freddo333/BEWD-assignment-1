@@ -3,11 +3,12 @@
 <?php 
 
 // Initialize the session
-session_start();
+//session_start();
  
 // Check if the user is already logged in, if yes then redirect him to welcome page
 if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
-    header("location: welcome.php");
+    //header("location: welcome.php");
+	echo '<script> location.replace("welcome.php"); </script>';
     exit;
 }
  
@@ -57,7 +58,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         $hashed_password = $row["password"];
                         if(password_verify($password, $hashed_password)){
                             // Password is correct, so start a new session
-                            session_start();
+							//session_destroy();
+                            //session_start();
                             
                             // Store data in session variables
                             $_SESSION["loggedin"] = true;
@@ -65,7 +67,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                             $_SESSION["username"] = $username;                            
                             
                             // Redirect user to welcome page
-                            header("location: welcome.php");
+                            //header("location: welcome.php");
+							echo '<script> location.replace("welcome.php"); </script>';
                         } else{
                             // Display an error message if password is not valid
                             $password_err = "The password you entered was not valid.";
@@ -96,7 +99,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <title>Login</title>
 </head>
 <body>
-    <div class="container-fluid text-left text-md-left">
+    <div class="container-fluid bg-light">
         <h2>Login</h2>
         <p>Please fill in your credentials to login.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">

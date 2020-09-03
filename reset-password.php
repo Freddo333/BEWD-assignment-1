@@ -1,12 +1,11 @@
 <?php include "templates/header.php"; ?>
 
 <?php
-// Initialize the session
-session_start();
  
 // Check if the user is logged in, if not then redirect to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: index.php");
+    //header("location: index.php");
+	echo '<script> location.replace("index.php"); </script>';
     exit;
 }
  
@@ -57,7 +56,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             if($stmt->execute()){
                 // Password updated successfully. Destroy the session, and redirect to login page
                 session_destroy();
-                header("location: index.php");
+                //header("location: welcome.php");
+				echo '<script> location.replace("welcome.php"); </script>';
                 exit();
             } else{
                 echo "Oops! Something went wrong. Please try again later.";
@@ -80,11 +80,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <title>Reset Password</title>
 </head>
 <body>
-    <div class="container-fluid text-left text-md-left">
+    <div class="container-fluid bg-light">
         <h2>Reset Password</h2>
         <p>Please fill out this form to reset your password.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post"> 
-            <div class="form-group <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
+            <div class="form-group  <?php echo (!empty($new_password_err)) ? 'has-error' : ''; ?>">
                 <label>New Password</label>
                 <input type="password" name="new_password" class="form-control" value="<?php echo $new_password; ?>">
                 <span class="help-block"><?php echo $new_password_err; ?></span>

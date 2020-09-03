@@ -37,5 +37,6 @@
             echo $sql . "<br>" . $error->getMessage();
         }
     };
-	header("location: welcome.php");
+	//header("location: welcome.php");
+	echo '<script> location.replace("welcome.php"); </script>';
 ?>

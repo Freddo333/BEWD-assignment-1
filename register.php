@@ -1,4 +1,4 @@
-<?php include "templates/header.php"; ?>
+<?php include "templates/loged-out-header.php"; ?>
 <?php 
 // Include config file
 require_once "config.php";
@@ -77,7 +77,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             // Attempt to execute the prepared statement
             if($stmt->execute()){
                 // Redirect to login page
-                header("location: index.php");
+                //header("location: index.php");
+				echo '<script> location.replace("index.php"); </script>';
             } else{
                 echo "Something went wrong. Please try again later.";
             }
@@ -99,7 +100,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <title>Sign Up</title>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="container-fluid bg-light">
         <h2>Sign Up</h2>
         <p>Please fill this form to create an account.</p>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
@@ -120,9 +121,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Submit">
-                <input type="reset" class="btn btn-default" value="Reset">
             </div>
-            <p>Already have an account? <a href="login.php">Login here</a>.</p>
+            <p>Already have an account? <a href="index.php">Login here</a>.</p>
         </form>
     </div>    
 </body>

@@ -1,5 +1,5 @@
 <?php include "templates/header.php"; ?>
-<div class="container-fluid text-left text-md- bg-secondary">
+<div class="container-fluid bg-light">
 <title>Edit</title>
 <h1>Edit</h1>
 <?php 
@@ -12,7 +12,13 @@
     if (isset($_POST['submit'])) {
         try {
             $connection = new PDO($dsn, $username, $password, $options);  
-            
+				
+				if ($_POST['cost'] ==""){
+					$_POST['cost'] = '0';
+					}
+				if ($_POST['paid'] ==""){
+					$_POST['paid'] = '0';
+				}
 			    //grab elements from form and set as varaible
 				$product = array( 
 				"id"    		=> $_POST['id'], 
@@ -60,7 +66,7 @@
             $id = $_GET['id'];
             
             //select statement to get the right data
-            $sql = "SELECT * FROM products WHERE id = :id AND username = {$_SESSION['username']}";
+            $sql = "SELECT * FROM products WHERE id = :id AND username = '{$_SESSION['username']}'";
             
             // prepare the connection
             $statement = $connection->prepare($sql);
@@ -88,14 +94,15 @@
 ?>
 
 <?php if (isset($_POST['submit']) && $statement) {
-header("location: welcome.php");
+//header("location: welcome.php");
+echo '<script> location.replace("welcome.php"); </script>';
 }?>
 
 <form method="post">
     
     <input type="hidden" name="id" id="id" readonly value="<?php echo escape($productIn['id']); ?>" >
     <label for="productname">productname</label>
-    <input type="text" maxlength="32" name="productname" id="productname" value="<?php echo escape($productIn['productname']); ?>">
+    <input type="text" pattern="[A-Za-z0-9\ \-]{1,}" title="Alpha-numeric" maxlength="32" name="productname" id="productname" value="<?php echo escape($productIn['productname']); ?>">
     <label for="cost">cost</label>
     <input type="text" step=".01" name="cost" id="cost" value="<?php echo escape($productIn['cost']); ?>">
     <label for="paid">paid</label>
